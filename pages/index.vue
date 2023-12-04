@@ -25,82 +25,11 @@
   import { ref } from "vue";
 
   const currencies = ["CAD", "USD", "AUD", "EUR", "GBP"];
+
+  const { data } = await useCategory().getMenWomenCategories();
+
   const navigation = {
-    categories: [
-      {
-        name: "Women",
-        featured: [
-          {
-            name: "New Arrivals",
-            href: "#",
-            imageSrc:
-              "https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg",
-            imageAlt:
-              "Models sitting back to back, wearing Basic Tee in black and bone.",
-          },
-          {
-            name: "Basic Tees",
-            href: "#",
-            imageSrc:
-              "https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg",
-            imageAlt:
-              "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
-          },
-          {
-            name: "Accessories",
-            href: "#",
-            imageSrc:
-              "https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg",
-            imageAlt:
-              "Model wearing minimalist watch with black wristband and white watch face.",
-          },
-          {
-            name: "Carry",
-            href: "#",
-            imageSrc:
-              "https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg",
-            imageAlt:
-              "Model opening tan leather long wallet with credit card pockets and cash pouch.",
-          },
-        ],
-      },
-      {
-        name: "Men",
-        featured: [
-          {
-            name: "New Arrivals",
-            href: "#",
-            imageSrc:
-              "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg",
-            imageAlt:
-              "Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.",
-          },
-          {
-            name: "Basic Tees",
-            href: "#",
-            imageSrc:
-              "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg",
-            imageAlt: "Model wearing light heather gray t-shirt.",
-          },
-          {
-            name: "Accessories",
-            href: "#",
-            imageSrc:
-              "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg",
-            imageAlt:
-              "Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.",
-          },
-          {
-            name: "Carry",
-            href: "#",
-            imageSrc:
-              "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg",
-            imageAlt:
-              "Model putting folded cash into slim card holder olive leather wallet with hand stitching.",
-          },
-        ],
-      },
-    ],
+    categories: data.value?.data,
     pages: [
       { name: "Company", href: "#" },
       { name: "Stores", href: "#" },
@@ -286,21 +215,21 @@
                           class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
                         >
                           <img
-                            :src="item.imageSrc"
-                            :alt="item.imageAlt"
+                            :src="item.imageUrl"
+                            :alt="item.slug"
                             class="object-cover object-center"
                           />
                         </div>
-                        <a
-                          :href="item.href"
+                        <nuxt-link
                           class="mt-6 block text-sm font-medium text-gray-900"
+                          to="/"
                         >
                           <span
                             class="absolute inset-0 z-10"
                             aria-hidden="true"
                           />
                           {{ item.name }}
-                        </a>
+                        </nuxt-link>
                         <p
                           aria-hidden="true"
                           class="mt-1 text-sm text-gray-500"
@@ -515,13 +444,13 @@
                                         class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
                                       >
                                         <img
-                                          :src="item.imageSrc"
-                                          :alt="item.imageAlt"
+                                          :src="item.imageUrl"
+                                          :alt="item.slug"
                                           class="object-cover object-center"
                                         />
                                       </div>
-                                      <a
-                                        :href="item.href"
+                                      <nuxt-link
+                                        to="/"
                                         class="mt-4 block font-medium text-gray-900"
                                       >
                                         <span
@@ -529,7 +458,7 @@
                                           aria-hidden="true"
                                         />
                                         {{ item.name }}
-                                      </a>
+                                      </nuxt-link>
                                       <p aria-hidden="true" class="mt-1">
                                         Shop now
                                       </p>
@@ -841,119 +770,5 @@
         </div>
       </section>
     </main>
-
-    <footer aria-labelledby="footer-heading" class="bg-gray-900">
-      <h2 id="footer-heading" class="sr-only">Footer</h2>
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="py-20 xl:grid xl:grid-cols-3 xl:gap-8">
-          <div class="grid grid-cols-2 gap-8 xl:col-span-2">
-            <div
-              class="space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0"
-            >
-              <div>
-                <h3 class="text-sm font-medium text-white">Shop</h3>
-                <ul role="list" class="mt-6 space-y-6">
-                  <li
-                    v-for="item in footerNavigation.shop"
-                    :key="item.name"
-                    class="text-sm"
-                  >
-                    <a
-                      :href="item.href"
-                      class="text-gray-300 hover:text-white"
-                      >{{ item.name }}</a
-                    >
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 class="text-sm font-medium text-white">Company</h3>
-                <ul role="list" class="mt-6 space-y-6">
-                  <li
-                    v-for="item in footerNavigation.company"
-                    :key="item.name"
-                    class="text-sm"
-                  >
-                    <a
-                      :href="item.href"
-                      class="text-gray-300 hover:text-white"
-                      >{{ item.name }}</a
-                    >
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div
-              class="space-y-12 md:grid md:grid-cols-2 md:gap-8 md:space-y-0"
-            >
-              <div>
-                <h3 class="text-sm font-medium text-white">Account</h3>
-                <ul role="list" class="mt-6 space-y-6">
-                  <li
-                    v-for="item in footerNavigation.account"
-                    :key="item.name"
-                    class="text-sm"
-                  >
-                    <a
-                      :href="item.href"
-                      class="text-gray-300 hover:text-white"
-                      >{{ item.name }}</a
-                    >
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 class="text-sm font-medium text-white">Connect</h3>
-                <ul role="list" class="mt-6 space-y-6">
-                  <li
-                    v-for="item in footerNavigation.connect"
-                    :key="item.name"
-                    class="text-sm"
-                  >
-                    <a
-                      :href="item.href"
-                      class="text-gray-300 hover:text-white"
-                      >{{ item.name }}</a
-                    >
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="mt-12 md:mt-16 xl:mt-0">
-            <h3 class="text-sm font-medium text-white">
-              Sign up for our newsletter
-            </h3>
-            <p class="mt-6 text-sm text-gray-300">
-              The latest deals and savings, sent to your inbox weekly.
-            </p>
-            <form class="mt-2 flex sm:max-w-md">
-              <label for="email-address" class="sr-only">Email address</label>
-              <input
-                id="email-address"
-                type="text"
-                autocomplete="email"
-                required
-                class="w-full min-w-0 appearance-none rounded-md border border-white bg-white px-4 py-2 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900"
-              />
-              <div class="ml-4 flex-shrink-0">
-                <button
-                  type="submit"
-                  class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-                >
-                  Sign up
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <div class="border-t border-gray-800 py-10">
-          <p class="text-sm text-gray-400">
-            Copyright &copy; 2021 Your Company, Inc.
-          </p>
-        </div>
-      </div>
-    </footer>
   </div>
 </template>

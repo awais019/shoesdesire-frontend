@@ -9,4 +9,9 @@ export default defineNuxtConfig({
     },
   },
   modules: ["@formkit/nuxt", "@vueuse/nuxt"],
+  runtimeConfig: {
+    public: {
+      baseURL: process.env.BASE_URL,
+    },
+  },
 });
