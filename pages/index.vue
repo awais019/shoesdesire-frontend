@@ -31,102 +31,47 @@
   const navigation = {
     categories: data.value?.data,
     pages: [
-      { name: "Company", href: "#" },
-      { name: "Stores", href: "#" },
+      { name: "About us", link: "/about" },
+      { name: "Contact us", link: "/contact" },
     ],
   };
-  const categories = [
-    {
-      name: "New Arrivals",
-      href: "#",
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/home-page-01-category-01.jpg",
-    },
-    {
-      name: "Productivity",
-      href: "#",
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/home-page-01-category-02.jpg",
-    },
-    {
-      name: "Workspace",
-      href: "#",
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/home-page-01-category-04.jpg",
-    },
-    {
-      name: "Accessories",
-      href: "#",
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/home-page-01-category-05.jpg",
-    },
-    {
-      name: "Sale",
-      href: "#",
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/home-page-01-category-03.jpg",
-    },
-  ];
-  const collections = [
-    {
-      name: "Handcrafted Collection",
-      href: "#",
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/home-page-01-collection-01.jpg",
-      imageAlt:
-        "Brown leather key ring with brass metal loops and rivets on wood table.",
-      description:
-        "Keep your phone, keys, and wallet together, so you can lose everything at once.",
-    },
-    {
-      name: "Organized Desk Collection",
-      href: "#",
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/home-page-01-collection-02.jpg",
-      imageAlt:
-        "Natural leather mouse pad on white desk next to porcelain mug and keyboard.",
-      description:
-        "The rest of the house will still be a mess, but your desk will look great.",
-    },
-    {
-      name: "Focus Collection",
-      href: "#",
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/home-page-01-collection-03.jpg",
-      imageAlt:
-        "Person placing task list card into walnut card holder next to felt carrying case on leather desk pad.",
-      description:
-        "Be more productive than enterprise project managers with a single piece of paper.",
-    },
-  ];
-  const footerNavigation = {
-    shop: [
-      { name: "Bags", href: "#" },
-      { name: "Tees", href: "#" },
-      { name: "Objects", href: "#" },
-      { name: "Home Goods", href: "#" },
-      { name: "Accessories", href: "#" },
-    ],
-    company: [
-      { name: "Who we are", href: "#" },
-      { name: "Sustainability", href: "#" },
-      { name: "Press", href: "#" },
-      { name: "Careers", href: "#" },
-      { name: "Terms & Conditions", href: "#" },
-      { name: "Privacy", href: "#" },
-    ],
-    account: [
-      { name: "Manage Account", href: "#" },
-      { name: "Returns & Exchanges", href: "#" },
-      { name: "Redeem a Gift Card", href: "#" },
-    ],
-    connect: [
-      { name: "Contact Us", href: "#" },
-      { name: "Twitter", href: "#" },
-      { name: "Instagram", href: "#" },
-      { name: "Pinterest", href: "#" },
-    ],
-  };
+
+  const { data: _data } = await useCategory().getAll();
+
+  const categories = _data.value?.data.slice(0, 5);
+
+  // const collections = [
+  //   {
+  //     name: "Handcrafted Collection",
+  //     href: "#",
+  //     imageSrc:
+  //       "https://tailwindui.com/img/ecommerce-images/home-page-01-collection-01.jpg",
+  //     imageAlt:
+  //       "Brown leather key ring with brass metal loops and rivets on wood table.",
+  //     description:
+  //       "Keep your phone, keys, and wallet together, so you can lose everything at once.",
+  //   },
+  //   {
+  //     name: "Organized Desk Collection",
+  //     href: "#",
+  //     imageSrc:
+  //       "https://tailwindui.com/img/ecommerce-images/home-page-01-collection-02.jpg",
+  //     imageAlt:
+  //       "Natural leather mouse pad on white desk next to porcelain mug and keyboard.",
+  //     description:
+  //       "The rest of the house will still be a mess, but your desk will look great.",
+  //   },
+  //   {
+  //     name: "Focus Collection",
+  //     href: "#",
+  //     imageSrc:
+  //       "https://tailwindui.com/img/ecommerce-images/home-page-01-collection-03.jpg",
+  //     imageAlt:
+  //       "Person placing task list card into walnut card holder next to felt carrying case on leather desk pad.",
+  //     description:
+  //       "Be more productive than enterprise project managers with a single piece of paper.",
+  //   },
+  // ];
 
   const mobileMenuOpen = ref(false);
 </script>
@@ -248,10 +193,10 @@
                   :key="page.name"
                   class="flow-root"
                 >
-                  <a
-                    :href="page.href"
+                  <nuxt-link
+                    :to="page.link"
                     class="-m-2 block p-2 font-medium text-gray-900"
-                    >{{ page.name }}</a
+                    >{{ page.name }}</nuxt-link
                   >
                 </div>
               </div>
@@ -473,7 +418,7 @@
                         <a
                           v-for="page in navigation.pages"
                           :key="page.name"
-                          :href="page.href"
+                          :href="page.link"
                           class="flex items-center text-sm font-medium text-white"
                           >{{ page.name }}</a
                         >
@@ -604,16 +549,16 @@
               <div
                 class="absolute flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0"
               >
-                <a
+                <nuxt-link
                   v-for="category in categories"
                   :key="category.name"
-                  :href="category.href"
+                  to="/"
                   class="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto"
                 >
                   <span aria-hidden="true" class="absolute inset-0">
                     <img
-                      :src="category.imageSrc"
-                      alt=""
+                      :src="category.imageUrl"
+                      :alt="category.slug"
                       class="h-full w-full object-cover object-center"
                     />
                   </span>
@@ -625,7 +570,7 @@
                     class="relative mt-auto text-center text-xl font-bold text-white"
                     >{{ category.name }}</span
                   >
-                </a>
+                </nuxt-link>
               </div>
             </div>
           </div>
@@ -685,8 +630,8 @@
       </section>
 
       <!-- Collection section -->
-      <section
-        aria-labelledby="collection-heading"
+      <!-- <section
+        aria-labelledby="collection-heading"`
         class="mx-auto max-w-xl px-4 pt-24 sm:px-6 sm:pt-32 lg:max-w-7xl lg:px-8"
       >
         <h2
@@ -727,7 +672,7 @@
             </p>
           </a>
         </div>
-      </section>
+      </section> -->
 
       <!-- Featured section -->
       <section

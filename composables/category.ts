@@ -19,7 +19,23 @@ export const useCategory = () => {
     });
   }
 
+  function getAll() {
+    return useFetch<{
+      data: {
+        id: string;
+        name: string;
+        slug: string;
+        description: string;
+        imageUrl: string;
+      }[];
+      message: string;
+    }>("/categories", {
+      baseURL,
+    });
+  }
+
   return {
     getMenWomenCategories,
+    getAll,
   };
 };
