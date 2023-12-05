@@ -11,38 +11,23 @@
   import { XMarkIcon } from "@heroicons/vue/24/outline";
   import { ChevronDownIcon } from "@heroicons/vue/20/solid";
 
-  const mobileFiltersOpen = ref(false);
+  defineProps<{
+    filters: {
+      id: string;
+      name: string;
+      options:
+        | {
+            value: string;
+            label: string | number;
+          }[]
+        | undefined;
+    }[];
+    mobileFiltersOpen: boolean;
+  }>();
 
-  const { data: sizes } = await useSizeColor().getSizes();
-  const { data: colors } = await useSizeColor().getColors();
-  const { data: categories } = await useCategory().getAll();
-
-  const filters = [
-    {
-      id: "color",
-      name: "Color",
-      options: colors.value?.data?.map((item) => ({
-        value: item.id,
-        label: item.name,
-      })),
-    },
-    {
-      id: "category",
-      name: "Category",
-      options: categories.value?.data?.map((item) => ({
-        value: item.id,
-        label: item.name,
-      })),
-    },
-    {
-      id: "sizes",
-      name: "Sizes",
-      options: sizes.value?.data?.map((item) => ({
-        value: item.id,
-        label: item.size,
-      })),
-    },
-  ];
+  defineEmits<{
+    (e: "update:mobileFiltersOpen", value: boolean): void;
+  }>();
 </script>
 
 <template>
@@ -50,7 +35,7 @@
     <Dialog
       as="div"
       class="relative z-40 lg:hidden"
-      @close="mobileFiltersOpen = false"
+      @close="() => $emit('update:mobileFiltersOpen', false)"
     >
       <TransitionChild
         as="template"
@@ -82,7 +67,7 @@
               <button
                 type="button"
                 class="relative -mr-2 flex h-10 w-10 items-center justify-center p-2 text-gray-400 hover:text-gray-500"
-                @click="mobileFiltersOpen = false"
+                @click="() => $emit('update:mobileFiltersOpen', false)"
               >
                 <span class="absolute -inset-0.5" />
                 <span class="sr-only">Close menu</span>
@@ -90,7 +75,6 @@
               </button>
             </div>
 
-            <!-- Filters -->
             <form class="mt-4">
               <Disclosure
                 as="div"

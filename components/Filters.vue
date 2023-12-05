@@ -3,38 +3,23 @@
 
   import { PlusIcon } from "@heroicons/vue/20/solid";
 
-  const { data: sizes } = await useSizeColor().getSizes();
-  const { data: colors } = await useSizeColor().getColors();
-  const { data: categories } = await useCategory().getAll();
+  defineProps<{
+    filters: {
+      id: string;
+      name: string;
+      options:
+        | {
+            value: string;
+            label: string | number;
+          }[]
+        | undefined;
+    }[];
+    mobileFiltersOpen: boolean;
+  }>();
 
-  const mobileFiltersOpen = ref(false);
-
-  const filters = [
-    {
-      id: "color",
-      name: "Color",
-      options: colors.value?.data?.map((item) => ({
-        value: item.id,
-        label: item.name,
-      })),
-    },
-    {
-      id: "category",
-      name: "Category",
-      options: categories.value?.data?.map((item) => ({
-        value: item.id,
-        label: item.name,
-      })),
-    },
-    {
-      id: "sizes",
-      name: "Sizes",
-      options: sizes.value?.data?.map((item) => ({
-        value: item.id,
-        label: item.size,
-      })),
-    },
-  ];
+  defineEmits<{
+    (e: "update:mobileFiltersOpen", value: boolean): void;
+  }>();
 </script>
 
 <template>
@@ -44,7 +29,7 @@
     <button
       type="button"
       class="inline-flex items-center lg:hidden"
-      @click="mobileFiltersOpen = true"
+      @click="() => $emit('update:mobileFiltersOpen', true)"
     >
       <span class="text-sm font-medium text-gray-700">Filters</span>
       <PlusIcon
