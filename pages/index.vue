@@ -38,7 +38,7 @@
 
   const { data: _data } = await useCategory().getAll();
 
-  const categories = _data.value?.data.slice(0, 5);
+  const categories = _data.value?.data;
 
   // const collections = [
   //   {
@@ -521,7 +521,7 @@
       <!-- Category section -->
       <section
         aria-labelledby="category-heading"
-        class="pt-24 sm:pt-32 xl:mx-auto xl:max-w-7xl xl:px-8"
+        class="pt-24 sm:pt-32 xl:mx-auto xl:max-w-7xl xl:px-8 mb-12"
       >
         <div
           class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0"
@@ -532,28 +532,26 @@
           >
             Shop by Category
           </h2>
-          <a
+          <!-- <a
             href="#"
             class="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block"
           >
             Browse all categories
             <span aria-hidden="true"> &rarr;</span>
-          </a>
+          </a> -->
         </div>
 
-        <div class="mt-4 flow-root">
+        <div class="mt-4">
           <div class="-my-2">
-            <div
-              class="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible"
-            >
+            <div class="box-content overflow-x-auto py-2 xl:overflow-visible">
               <div
-                class="absolute flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0"
+                class="flex flex-col justify-center items-center gap-4 sm:flex-row sm:flex-wrap mx-auto px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0"
               >
                 <nuxt-link
                   v-for="category in categories"
                   :key="category.name"
                   to="/"
-                  class="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto"
+                  class="relative flex h-80 w-56 -12 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto"
                 >
                   <span aria-hidden="true" class="absolute inset-0">
                     <img
@@ -576,7 +574,7 @@
           </div>
         </div>
 
-        <div class="mt-6 px-4 sm:hidden">
+        <!-- <div class="mt-6 px-4 sm:hidden">
           <a
             href="#"
             class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500"
@@ -584,11 +582,11 @@
             Browse all categories
             <span aria-hidden="true"> &rarr;</span>
           </a>
-        </div>
+        </div> -->
       </section>
 
       <!-- Featured section -->
-      <section
+      <!-- <section
         aria-labelledby="social-impact-heading"
         class="mx-auto max-w-7xl px-4 pt-24 sm:px-6 sm:pt-32 lg:px-8"
       >
@@ -627,7 +625,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
 
       <!-- Collection section -->
       <!-- <section
@@ -675,7 +673,7 @@
       </section> -->
 
       <!-- Featured section -->
-      <section
+      <!-- <section
         aria-labelledby="comfort-heading"
         class="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8"
       >
@@ -713,7 +711,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
     </main>
   </div>
 </template>
