@@ -1,10 +1,10 @@
 <script lang="ts" setup>
   defineProps<{
     product: {
-      id: number;
+      id: string;
       name: string;
       href: string;
-      price: string;
+      price: number;
       description: string;
       imageSrc: string;
       imageAlt: string;
