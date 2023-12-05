@@ -100,6 +100,15 @@
                       option.label
                     )
                   "
+                  :checked="
+                    section.name == 'Category'
+                      ? category == option.label
+                      : section.name == 'Color'
+                      ? color == option.label
+                      : section.name == 'Sizes'
+                      ? size == option.label
+                      : false
+                  "
                 />
                 <label
                   :for="`${section.id}-${optionIdx}`"
