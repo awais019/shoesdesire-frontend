@@ -125,9 +125,7 @@
       </div>
 
       <div class="border-t border-gray-800 py-10">
-        <p class="text-sm text-gray-400">
-          Copyright &copy; 2021 Your Company, Inc.
-        </p>
+        <p class="text-sm text-gray-400">Copyright &copy; 2023 Shoes Desire.</p>
       </div>
     </div>
   </footer>
