@@ -41,7 +41,6 @@
 
 <template>
   <div class="bg-white">
-    <!-- Mobile menu -->
     <TransitionRoot as="template" :show="mobileMenuOpen">
       <Dialog
         as="div"
@@ -176,83 +175,20 @@
                   >
                 </div>
               </div>
-
-              <div class="space-y-6 border-t border-gray-200 px-4 py-6">
-                <!-- Currency selector -->
-                <form>
-                  <div class="inline-block">
-                    <label for="mobile-currency" class="sr-only"
-                      >Currency</label
-                    >
-                    <div
-                      class="group relative -ml-2 rounded-md border-transparent focus-within:ring-2 focus-within:ring-white"
-                    >
-                      <select
-                        id="mobile-currency"
-                        name="currency"
-                        class="flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800"
-                      >
-                        <option v-for="currency in currencies" :key="currency">
-                          {{ currency }}
-                        </option>
-                      </select>
-                      <div
-                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center"
-                      >
-                        <ChevronDownIcon
-                          class="h-5 w-5 text-gray-500"
-                          aria-hidden="true"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
             </DialogPanel>
           </TransitionChild>
         </div>
       </Dialog>
     </TransitionRoot>
 
-    <!-- Hero section -->
     <div class="relative bg-gray-900">
-      <!-- Navigation -->
       <header class="relative z-10">
         <nav aria-label="Top">
-          <!-- Top navigation -->
           <div class="bg-gray-900">
             <div
               class="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
             >
-              <!-- Currency selector -->
-              <form>
-                <div>
-                  <label for="desktop-currency" class="sr-only">Currency</label>
-                  <div
-                    class="group relative -ml-2 rounded-md border-transparent bg-gray-900 focus-within:ring-2 focus-within:ring-white"
-                  >
-                    <select
-                      id="desktop-currency"
-                      name="currency"
-                      class="flex items-center rounded-md border-transparent bg-gray-900 bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-white focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-100"
-                    >
-                      <option v-for="currency in currencies" :key="currency">
-                        {{ currency }}
-                      </option>
-                    </select>
-                    <div
-                      class="pointer-events-none absolute inset-y-0 right-0 flex items-center"
-                    >
-                      <ChevronDownIcon
-                        class="h-5 w-5 text-gray-300"
-                        aria-hidden="true"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </form>
-
-              <div class="flex items-center space-x-6">
+              <div class="flex items-center space-x-6 ml-auto">
                 <a
                   href="#"
                   class="text-sm font-medium text-white hover:text-gray-100"
@@ -267,25 +203,22 @@
             </div>
           </div>
 
-          <!-- Secondary navigation -->
           <div class="bg-white bg-opacity-10 backdrop-blur-md backdrop-filter">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div>
                 <div class="flex h-16 items-center justify-between">
-                  <!-- Logo (lg+) -->
                   <div class="hidden lg:flex lg:flex-1 lg:items-center">
-                    <a href="#">
-                      <span class="sr-only">Your Company</span>
+                    <nuxt-link to="/">
+                      <span class="sr-only">Shoes Desire</span>
                       <img
                         class="h-8 w-auto"
                         src="https://tailwindui.com/img/logos/mark.svg?color=white"
                         alt=""
                       />
-                    </a>
+                    </nuxt-link>
                   </div>
 
                   <div class="hidden h-full lg:flex">
-                    <!-- Flyout menus -->
                     <PopoverGroup class="inset-x-0 bottom-0 px-4">
                       <div class="flex h-full justify-center space-x-8">
                         <Popover
@@ -320,7 +253,6 @@
                             <PopoverPanel
                               class="absolute inset-x-0 top-full text-sm text-gray-500"
                             >
-                              <!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
                               <div
                                 class="absolute inset-0 top-1/2 bg-white shadow"
                                 aria-hidden="true"
@@ -368,18 +300,18 @@
                           </transition>
                         </Popover>
 
-                        <a
+                        <nuxt-link
                           v-for="page in navigation.pages"
                           :key="page.name"
-                          :href="page.link"
+                          :to="page.link"
                           class="flex items-center text-sm font-medium text-white"
-                          >{{ page.name }}</a
                         >
+                          {{ page.name }}
+                        </nuxt-link>
                       </div>
                     </PopoverGroup>
                   </div>
 
-                  <!-- Mobile menu and search (lg-) -->
                   <div class="flex flex-1 items-center lg:hidden">
                     <button
                       type="button"
@@ -390,22 +322,20 @@
                       <Bars3Icon class="h-6 w-6" aria-hidden="true" />
                     </button>
 
-                    <!-- Search -->
                     <a href="#" class="ml-2 p-2 text-white">
                       <span class="sr-only">Search</span>
                       <MagnifyingGlassIcon class="h-6 w-6" aria-hidden="true" />
                     </a>
                   </div>
 
-                  <!-- Logo (lg-) -->
-                  <a href="#" class="lg:hidden">
-                    <span class="sr-only">Your Company</span>
+                  <nuxt-link to="/" class="lg:hidden">
+                    <span class="sr-only">Shoes Desire</span>
                     <img
                       src="https://tailwindui.com/img/logos/mark.svg?color=white"
                       alt=""
                       class="h-8 w-auto"
                     />
-                  </a>
+                  </nuxt-link>
 
                   <div class="flex flex-1 items-center justify-end">
                     <a
@@ -415,23 +345,25 @@
                     >
 
                     <div class="flex items-center lg:ml-8">
-                      <!-- Help -->
-                      <a href="#" class="p-2 text-white lg:hidden">
+                      <nuxt-link href="/" class="p-2 text-white lg:hidden">
                         <span class="sr-only">Help</span>
                         <QuestionMarkCircleIcon
                           class="h-6 w-6"
                           aria-hidden="true"
                         />
-                      </a>
-                      <a
-                        href="#"
+                      </nuxt-link>
+                      <nuxt-link
+                        to="/"
                         class="hidden text-sm font-medium text-white lg:block"
-                        >Help</a
                       >
+                        Help
+                      </nuxt-link>
 
-                      <!-- Cart -->
                       <div class="ml-4 flow-root lg:ml-8">
-                        <a href="#" class="group -m-2 flex items-center p-2">
+                        <nuxt-link
+                          to="/cart"
+                          class="group -m-2 flex items-center p-2"
+                        >
                           <ShoppingBagIcon
                             class="h-6 w-6 flex-shrink-0 text-white"
                             aria-hidden="true"
@@ -440,7 +372,7 @@
                             >0</span
                           >
                           <span class="sr-only">items in cart, view bag</span>
-                        </a>
+                        </nuxt-link>
                       </div>
                     </div>
                   </div>
