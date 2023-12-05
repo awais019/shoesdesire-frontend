@@ -1,20 +1,10 @@
 <script lang="ts" setup>
-  const { data } = useProduct().getAll();
+  import useProductStore from "~/stores/product";
 
-  const products = computed(() =>
-    data.value?.data.map((product) => {
-      return {
-        id: product.id,
-        name: product.name,
-        href: `/products/${product.id}`,
-        price: product.price,
-        description: product.description,
-        imageSrc: product.images[0],
-        imageAlt: product.name,
-        options: `${product.colorsAvailable} colors, ${product.sizesAvailable} sizes`,
-      };
-    })
-  );
+  const productStore = useProductStore();
+
+  await productStore.getProducts();
+  const { products } = storeToRefs(productStore);
 </script>
 
 <template>
