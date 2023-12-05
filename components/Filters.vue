@@ -20,6 +20,8 @@
   defineEmits<{
     (e: "update:mobileFiltersOpen", value: boolean): void;
   }>();
+
+  function handleFilterChange(checked: boolean, value: string | number) {}
 </script>
 
 <template>
@@ -61,6 +63,12 @@
                   :value="option.value"
                   type="checkbox"
                   class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  @change="
+                    handleFilterChange(
+                      ($event.target as HTMLInputElement).checked,
+                      option.label
+                    )
+                  "
                 />
                 <label
                   :for="`${section.id}-${optionIdx}`"

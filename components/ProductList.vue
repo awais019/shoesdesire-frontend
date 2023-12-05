@@ -1,10 +1,7 @@
 <script lang="ts" setup>
   import useProductStore from "~/stores/product";
 
-  const productStore = useProductStore();
-
-  await productStore.getProducts();
-  const { products } = storeToRefs(productStore);
+  const { products } = storeToRefs(useProductStore());
 </script>
 
 <template>

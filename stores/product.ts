@@ -14,9 +14,8 @@ type Product = {
 export default defineStore("product", () => {
   const products = ref<Product[]>([]);
 
-  async function getProducts() {
-    const { data, error } = await useProduct().getAll();
-    console.log(data.value, error.value);
+  async function getProducts(category?: string, color?: string, size?: string) {
+    const { data, error } = await useProduct().getAll(category, color, size);
     products.value = data.value?.data ?? [];
   }
 

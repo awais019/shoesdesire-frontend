@@ -29,6 +29,10 @@
 </template>
 
 <script lang="ts" setup>
+  import useProductStore from "~/stores/product";
+
+  const route = useRoute();
+
   const { data: sizes } = await useSizeColor().getSizes();
   const { data: colors } = await useSizeColor().getColors();
   const { data: categories } = await useCategory().getAll();
@@ -70,4 +74,11 @@
   ];
 
   const mobileFiltersOpen = ref(false);
+
+  const { category, color, size } = route.query as {
+    category: string | undefined;
+    color: string | undefined;
+    size: string | undefined;
+  };
+  await useProductStore().getProducts(category, color, size);
 </script>

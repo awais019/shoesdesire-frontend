@@ -14,12 +14,17 @@ type Product = {
 export const useProduct = () => {
   const { baseURL } = useRuntimeConfig().public;
 
-  function getAll() {
+  function getAll(category?: string, color?: string, size?: string) {
     return useFetch<{
       data: Product[];
       message: string;
     }>("/products", {
       baseURL,
+      query: {
+        ...(category && { category }),
+        ...(color && { color }),
+        ...(size && { size }),
+      },
     });
   }
 
