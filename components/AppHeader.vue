@@ -216,16 +216,6 @@
 
     <!-- Hero section -->
     <div class="relative bg-gray-900">
-      <!-- Decorative image and overlay -->
-      <div aria-hidden="true" class="absolute inset-0 overflow-hidden">
-        <img
-          src="https://tailwindui.com/img/ecommerce-images/home-page-01-hero-full-width.jpg"
-          alt=""
-          class="h-full w-full object-cover object-center"
-        />
-      </div>
-      <div aria-hidden="true" class="absolute inset-0 bg-gray-900 opacity-50" />
-
       <!-- Navigation -->
       <header class="relative z-10">
         <nav aria-label="Top">

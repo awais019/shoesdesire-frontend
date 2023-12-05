@@ -6,6 +6,7 @@
 
 <template>
   <div class="bg-white">
+    <HeroSection />
     <main>
       <!-- Category section -->
       <section
