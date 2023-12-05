@@ -80,5 +80,6 @@
     color: string | undefined;
     size: string | undefined;
   };
+
   await useProductStore().getProducts(category, color, size);
 </script>

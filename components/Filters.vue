@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-  import { ref } from "vue";
-
   import { PlusIcon } from "@heroicons/vue/20/solid";
+
+  import useProductStore from "~/stores/product";
 
   defineProps<{
     filters: {
@@ -21,7 +21,37 @@
     (e: "update:mobileFiltersOpen", value: boolean): void;
   }>();
 
-  function handleFilterChange(checked: boolean, value: string | number) {}
+  const route = useRoute();
+
+  let { category, color, size } = route.query as {
+    category: string | undefined;
+    color: string | undefined;
+    size: string | undefined;
+  };
+
+  async function handleFilterChange(
+    checked: boolean,
+    name: string,
+    value: string | number
+  ) {
+    if (name == "Category" && checked) {
+      category = value as string;
+    } else if (name == "Color" && checked) {
+      color = value as string;
+    } else if (name == "Sizes" && checked) {
+      size = value as string;
+    }
+    await useProductStore().getProducts(category, color, size);
+    let query = "";
+    if (category) query += `category=${category}&`;
+    if (color) query += `color=${color}&`;
+    if (size) query += `size=${size}&`;
+    return navigateTo(
+      `/products?${
+        query.length > 0 ? query.substring(0, query.length - 1) : ""
+      }`
+    );
+  }
 </script>
 
 <template>
@@ -66,6 +96,7 @@
                   @change="
                     handleFilterChange(
                       ($event.target as HTMLInputElement).checked,
+                      section.name,
                       option.label
                     )
                   "
