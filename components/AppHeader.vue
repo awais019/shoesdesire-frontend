@@ -23,6 +23,7 @@
   } from "@heroicons/vue/24/outline";
 
   import useCartStore from "~/stores/cart";
+  import useUserStore from "~/stores/user";
 
   const { data } = await useCategory().getMenWomenCategories();
 
@@ -37,6 +38,7 @@
   const mobileMenuOpen = ref(false);
 
   const { totalItems } = storeToRefs(useCartStore());
+  const { isLoggedIn, user } = storeToRefs(useUserStore());
 </script>
 
 <template>
@@ -163,7 +165,10 @@
                 </div>
               </div>
 
-              <div class="space-y-6 border-t border-gray-200 px-4 py-6">
+              <div
+                class="space-y-6 border-t border-gray-200 px-4 py-6"
+                v-if="!isLoggedIn"
+              >
                 <div class="flow-root">
                   <nuxt-link
                     to="/register"
@@ -179,6 +184,17 @@
                   </nuxt-link>
                 </div>
               </div>
+              <div
+                v-else
+                class="text-sm font-medium text-white hover:text-gray-100 flex items-center space-x-3 ml-auto"
+              >
+                <img
+                  src="https://source.unsplash.com/random/64x64/?user+redirect=True"
+                  :alt="user.firstName"
+                  class="rounded-full h-8 w-8 bg-cover"
+                />
+                <p>{{ user.firstName }} {{ user.lastName }}</p>
+              </div>
             </DialogPanel>
           </TransitionChild>
         </div>
@@ -192,7 +208,10 @@
             <div
               class="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
             >
-              <div class="flex items-center space-x-6 ml-auto">
+              <div
+                class="flex items-center space-x-6 ml-auto"
+                v-if="!isLoggedIn"
+              >
                 <nuxt-link
                   to="/signin"
                   class="text-sm font-medium text-white hover:text-gray-100"
@@ -203,6 +222,17 @@
                   class="text-sm font-medium text-white hover:text-gray-100"
                   >Create an account</nuxt-link
                 >
+              </div>
+              <div
+                v-else
+                class="text-sm font-medium text-white hover:text-gray-100 flex items-center space-x-3 ml-auto"
+              >
+                <img
+                  src="https://source.unsplash.com/random/64x64/?user+redirect=True"
+                  :alt="user.firstName"
+                  class="rounded-full h-8 w-8 bg-cover"
+                />
+                <p>{{ user.firstName }} {{ user.lastName }}</p>
               </div>
             </div>
           </div>

@@ -8,6 +8,8 @@ type User = {
   state: string;
 };
 
+import useUserStore from "~/stores/user";
+
 export const useUser = () => {
   const { baseURL } = useRuntimeConfig().public;
 
@@ -29,9 +31,11 @@ export const useUser = () => {
   }
 
   function signIn(email: string, password: string) {
-    return $fetch<{
+    return useFetch<{
       message: string;
-      token: string;
+      data: {
+        token: string;
+      };
     }>("/auth/signin", {
       method: "POST",
       baseURL,
@@ -42,9 +46,24 @@ export const useUser = () => {
     });
   }
 
+  function me() {
+    const token = useUserStore().token;
+    return useFetch<{
+      message: string;
+      data: {};
+    }>("/auth/me", {
+      method: "GET",
+      baseURL,
+      headers: {
+        "x-auth-token": token,
+      },
+    });
+  }
+
   return {
     create,
     verifyEmail,
     signIn,
+    me,
   };
 };
