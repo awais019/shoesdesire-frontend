@@ -9,7 +9,7 @@
   const userStore = useUserStore();
   const notificationStore = useNotificationStore();
 
-  const { cart } = storeToRefs(cartStore);
+  const { cart, totalItems } = storeToRefs(cartStore);
   const { isLoggedIn } = storeToRefs(userStore);
 
   const { checkOut } = useOrder();
@@ -167,7 +167,8 @@
           <div class="mt-6">
             <button
               type="submit"
-              class="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+              class="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 disabled:bg-indigo-300 disabled:cursor-not-allowed"
+              :disabled="totalItems == 0"
             >
               Checkout
             </button>

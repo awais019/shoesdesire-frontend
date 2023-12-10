@@ -93,6 +93,11 @@ export default defineStore(
       });
     });
 
+    function $resetStore() {
+      cartId.value = "";
+      cart.value = null;
+    }
+
     return {
       cartId,
       cart,
@@ -101,6 +106,7 @@ export default defineStore(
       addProductToCart,
       getCart,
       removeItemFromCart,
+      $resetStore,
     };
   },
   {

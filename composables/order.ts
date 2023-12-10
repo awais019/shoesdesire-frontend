@@ -25,7 +25,22 @@ export const useOrder = () => {
     });
   }
 
+  function updatePaymentStatus(orderId: string) {
+    const { token } = useUserStore();
+
+    return $fetch<{
+      message: string;
+    }>(`/orders/${orderId}`, {
+      method: "POST",
+      headers: {
+        "x-auth-token": token || "",
+      },
+      baseURL,
+    });
+  }
+
   return {
     checkOut,
+    updatePaymentStatus,
   };
 };

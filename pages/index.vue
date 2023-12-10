@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+  import useCartStore from "~/stores/cart";
+
   const { data: _data } = await useCategory().getAll();
 
   const categories = _data.value?.data;
@@ -10,6 +12,15 @@
     const response = await useUser().verifyEmail(token);
 
     if (response.message == "Success") {
+      navigateTo("/");
+    }
+  } else if (route.query.orderId) {
+    const orderId = route.query.orderId as string;
+
+    const response = await useOrder().updatePaymentStatus(orderId);
+
+    if (response.message == "Success") {
+      useCartStore().$resetStore();
       navigateTo("/");
     }
   }
