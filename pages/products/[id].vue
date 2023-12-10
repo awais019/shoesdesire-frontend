@@ -1,12 +1,14 @@
 <script setup lang="ts">
-  import { ref } from "vue";
   import {
     RadioGroup,
     RadioGroupLabel,
     RadioGroupOption,
   } from "@headlessui/vue";
 
+  import useCartStore from "~/stores/cart";
+
   const route = useRoute();
+  const cartStore = useCartStore();
 
   const { data } = await useProduct().getById(route.params.id as string);
 
@@ -41,6 +43,13 @@
 
   const selectedColor = ref(product.colors?.at(0));
   const selectedSize = ref(product.sizes?.at(0));
+  const quantity = ref(1);
+
+  function handleSubmit() {
+    console.log(selectedColor.value);
+    console.log(selectedSize.value);
+    console.log(quantity.value);
+  }
 </script>
 
 <template>
@@ -82,7 +91,7 @@
         </div>
 
         <div class="mt-8 lg:col-span-5">
-          <form>
+          <FormKit type="form" @submit="handleSubmit" :actions="false">
             <!-- Color picker -->
             <div>
               <h2 class="text-sm font-medium text-gray-900">Color</h2>
@@ -163,13 +172,32 @@
               </RadioGroup>
             </div>
 
+            <div class="mt-8">
+              <div class="flex items-center justify-between">
+                <label for="quantity" class="text-sm font-medium text-gray-900"
+                  >Quantity</label
+                >
+              </div>
+              <div class="mt-1">
+                <input
+                  type="number"
+                  name="quantity"
+                  id="quantity"
+                  min="1"
+                  max="10"
+                  class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  v-model="quantity"
+                />
+              </div>
+            </div>
+
             <button
               type="submit"
               class="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               Add to cart
             </button>
-          </form>
+          </FormKit>
 
           <!-- Product details -->
           <div class="mt-10">
