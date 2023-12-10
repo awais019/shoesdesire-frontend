@@ -8,6 +8,7 @@
   }>();
 
   const route = useRoute();
+  const recognition = new window.webkitSpeechRecognition();
 
   const { category, color, size, q } = route.query as {
     category: string | undefined;
@@ -18,35 +19,39 @@
 
   function handleSubmit() {
     if (query.value) {
+      query.value = query.value.replace(/\s/g, "");
       emits("close");
       if (route.path == "/products" && q) {
         useProductStore().getProducts(category, color, size, query.value);
-      } else if (q) {
-        useProductStore().getProducts(category, color, size, query.value);
-        let _query = "";
-        if (category) _query += `category=${category}&`;
-        if (color) _query += `color=${color}&`;
-        if (size) _query += `size=${size}&`;
-        _query += `q=${query.value}&`;
-        navigateTo(
-          `/products?${
-            _query.length > 0 ? _query.substring(0, _query.length - 1) : ""
-          }`
-        );
-      } else {
-        let _query = "";
-        if (category) _query += `category=${category}&`;
-        if (color) _query += `color=${color}&`;
-        if (size) _query += `size=${size}&`;
-        _query += `q=${query.value}&`;
-
-        navigateTo(
-          `/products?${
-            _query.length > 0 ? _query.substring(0, _query.length - 1) : ""
-          }`
-        );
       }
+      let _query = "";
+      if (category) _query += `category=${category}&`;
+      if (color) _query += `color=${color}&`;
+      if (size) _query += `size=${size}&`;
+      _query += `q=${query.value}&`;
+
+      navigateTo(
+        `/products?${
+          _query.length > 0 ? _query.substring(0, _query.length - 1) : ""
+        }`
+      );
     }
+  }
+
+  function recognizeSpeech() {
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = "en-US";
+
+    recognition.onresult = function (event: any) {
+      let transcript = "";
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        transcript += event.results[i][0].transcript;
+      }
+      query.value = transcript;
+    };
+
+    recognition.start();
   }
 </script>
 
@@ -62,6 +67,18 @@
         tabindex="0"
         autocomplete="off"
       />
+      <button @click="recognizeSpeech" class="absolute right-12 top-4">
+        <svg
+          class="pointer-events-none h-6 w-6 fill-slate-400"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          id="mic"
+        >
+          <path
+            d="M12,15a4,4,0,0,0,4-4V5A4,4,0,0,0,8,5v6A4,4,0,0,0,12,15ZM10,5a2,2,0,0,1,4,0v6a2,2,0,0,1-4,0Zm10,6a1,1,0,0,0-2,0A6,6,0,0,1,6,11a1,1,0,0,0-2,0,8,8,0,0,0,7,7.93V21H9a1,1,0,0,0,0,2h6a1,1,0,0,0,0-2H13V18.93A8,8,0,0,0,20,11Z"
+          ></path>
+        </svg>
+      </button>
       <button
         type="submit"
         class="absolute right-4 top-4 h-6 w-6"
