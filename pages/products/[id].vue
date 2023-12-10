@@ -13,6 +13,7 @@
   const { data } = await useProduct().getById(route.params.id as string);
 
   const product = {
+    id: data.value?.data.id,
     name: data.value?.data.name,
     price: data.value?.data.price,
     description: data.value?.data.description,
@@ -46,9 +47,15 @@
   const quantity = ref(1);
 
   function handleSubmit() {
-    console.log(selectedColor.value);
-    console.log(selectedSize.value);
-    console.log(quantity.value);
+    if (!product.id || !selectedSize.value?.id || !selectedColor.value?.id)
+      return;
+
+    cartStore.addProductToCart(
+      product.id as string,
+      quantity.value,
+      selectedSize.value.id,
+      selectedColor.value.id
+    );
   }
 </script>
 

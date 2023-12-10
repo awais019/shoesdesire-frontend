@@ -1,7 +1,7 @@
 export default defineStore("cart", () => {
   const cartId = ref("");
 
-  const { create } = useCart();
+  const { create, addToCart } = useCart();
 
   async function addProductToCart(
     productId: string,
@@ -12,7 +12,23 @@ export default defineStore("cart", () => {
     if (!cartId.value) {
       const { data } = await create();
       cartId.value = data.value?.data.id ?? "";
+      const { data: cart } = await addToCart(
+        cartId.value,
+        productId,
+        quantity,
+        sizeId,
+        colorId
+      );
+      console.log(cart.value);
     } else if (cartId) {
+      const { data: cart } = await addToCart(
+        cartId.value,
+        productId,
+        quantity,
+        sizeId,
+        colorId
+      );
+      console.log(cart.value);
     }
   }
 
