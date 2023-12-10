@@ -1,4 +1,4 @@
-type Product = {
+type ProductAll = {
   id: string;
   name: string;
   slug: string;
@@ -11,12 +11,31 @@ type Product = {
   sizesAvailable: number[];
 };
 
+type Product = {
+  name: string;
+  description: string;
+  price: number;
+  images: {
+    id: string;
+    url: string;
+  }[];
+  sizes: {
+    id: string;
+    size: number;
+  };
+  colors: {
+    id: string;
+    name: string;
+    hex: string;
+  }[];
+};
+
 export const useProduct = () => {
   const { baseURL } = useRuntimeConfig().public;
 
   function getAll(category?: string, color?: string, size?: string) {
     return useFetch<{
-      data: Product[];
+      data: ProductAll[];
       message: string;
     }>("/products", {
       baseURL,
@@ -28,7 +47,17 @@ export const useProduct = () => {
     });
   }
 
+  function getById(id: string) {
+    return useFetch<{
+      data: Product;
+      message: string;
+    }>(`/products/${id}`, {
+      baseURL,
+    });
+  }
+
   return {
     getAll,
+    getById,
   };
 };

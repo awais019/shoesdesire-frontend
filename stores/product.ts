@@ -1,4 +1,4 @@
-type Product = {
+type ProductAll = {
   id: string;
   name: string;
   slug: string;
@@ -12,10 +12,10 @@ type Product = {
 };
 
 export default defineStore("product", () => {
-  const products = ref<Product[]>([]);
+  const products = ref<ProductAll[]>([]);
 
   async function getProducts(category?: string, color?: string, size?: string) {
-    const { data, error } = await useProduct().getAll(category, color, size);
+    const { data } = await useProduct().getAll(category, color, size);
     products.value = data.value?.data ?? [];
   }
 
