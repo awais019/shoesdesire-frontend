@@ -13,6 +13,7 @@
         itemId: item.id,
         name: item.Product.name,
         price: item.Product.price,
+        quantity: item.quantity,
         color: item.Color.name,
         size: item.Size.size,
         imageSrc: item.Product.Images[0].url,
@@ -51,7 +52,7 @@
             class="divide-y divide-gray-200 border-b border-t border-gray-200"
           >
             <li
-              v-for="(product, productIdx) in products"
+              v-for="product in products"
               :key="product.id"
               class="flex py-6 sm:py-10"
             >
@@ -92,25 +93,12 @@
                   </div>
 
                   <div class="mt-4 sm:mt-0 sm:pr-9">
-                    <label :for="`quantity-${productIdx}`" class="sr-only"
-                      >Quantity, {{ product.name }}</label
+                    <p
+                      v-if="product.quantity"
+                      class="ml-4 border-l border-gray-200 pl-4 text-gray-500"
                     >
-                    <select
-                      :id="`quantity-${productIdx}`"
-                      :name="`quantity-${productIdx}`"
-                      class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-                    >
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                    </select>
+                      Quantity {{ product.quantity }}
+                    </p>
 
                     <div class="absolute right-0 top-0">
                       <button
@@ -143,7 +131,7 @@
             >
               <dt class="text-base font-medium text-gray-900">Order total</dt>
               <dd class="text-base font-medium text-gray-900">
-                PKR {{ total }}
+                PKR {{ total?.toFixed(2) }}
               </dd>
             </div>
           </dl>
