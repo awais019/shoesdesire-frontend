@@ -65,9 +65,17 @@ export const useCart = () => {
     });
   }
 
+  function removeCartItem(cartId: string, cartItemId: string) {
+    return useFetch(`/cart/${cartId}/items/${cartItemId}`, {
+      method: "DELETE",
+      baseURL,
+    });
+  }
+
   return {
     create,
     addToCart,
     get,
+    removeCartItem,
   };
 };

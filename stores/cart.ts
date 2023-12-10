@@ -7,6 +7,7 @@ type Cart = {
 };
 
 type CartItem = {
+  id: string;
   quantity: number;
   Product: {
     id: string;
@@ -29,7 +30,7 @@ export default defineStore(
     const cartId = ref("");
     const cart = ref<Cart | null>(null);
 
-    const { create, addToCart, get } = useCart();
+    const { create, addToCart, get, removeCartItem } = useCart();
 
     async function addProductToCart(
       productId: string,
@@ -56,6 +57,15 @@ export default defineStore(
       cart.value = data.value?.data ?? null;
     }
 
+    async function removeItemFromCart(cartItemId: string) {
+      if (!cartId.value) {
+        return;
+      }
+
+      await removeCartItem(cartId.value, cartItemId);
+      await getCart();
+    }
+
     const totalItems = computed(() => {
       if (!cart.value) {
         return 0;
@@ -72,6 +82,7 @@ export default defineStore(
       totalItems,
       addProductToCart,
       getCart,
+      removeItemFromCart,
     };
   },
   {

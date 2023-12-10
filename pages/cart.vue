@@ -1,14 +1,16 @@
 <script lang="ts" setup>
-  import { QuestionMarkCircleIcon, XMarkIcon } from "@heroicons/vue/20/solid";
+  import { XMarkIcon } from "@heroicons/vue/20/solid";
 
   import useCartStore from "~/stores/cart";
 
-  const { cart } = storeToRefs(useCartStore());
+  const cartStore = useCartStore();
+  const { cart } = storeToRefs(cartStore);
 
   const products = computed(() => {
-    return cart.value?.CartItem.map((item) => {
+    return cart.value?.CartItem.map((item: any) => {
       return {
         id: item.Product.id,
+        itemId: item.id,
         name: item.Product.name,
         price: item.Product.price,
         color: item.Color.name,
@@ -23,8 +25,10 @@
     return cart.value?.total;
   });
 
-  function handleSubmit() {
-    console.log("submit");
+  function handleSubmit() {}
+
+  function removeItem(itemId: string) {
+    cartStore.removeItemFromCart(itemId);
   }
 </script>
 
@@ -112,6 +116,7 @@
                       <button
                         type="button"
                         class="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
+                        @click.prevent="removeItem(product.itemId)"
                       >
                         <span class="sr-only">Remove</span>
                         <XMarkIcon class="h-5 w-5" aria-hidden="true" />
