@@ -2,6 +2,10 @@
   import useUserStore from "~/stores/user";
   import useNotificationStore from "~/stores/notification";
 
+  definePageMeta({
+    middleware: ["auth"],
+  });
+
   const userStore = useUserStore();
   const notificationStore = useNotificationStore();
 
