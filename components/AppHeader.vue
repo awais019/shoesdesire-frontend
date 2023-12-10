@@ -165,8 +165,10 @@
 
               <div class="space-y-6 border-t border-gray-200 px-4 py-6">
                 <div class="flow-root">
-                  <a href="#" class="-m-2 block p-2 font-medium text-gray-900"
-                    >Create an account</a
+                  <nuxt-link
+                    to="/register"
+                    class="-m-2 block p-2 font-medium text-gray-900"
+                    >Create an account</nuxt-link
                   >
                 </div>
                 <div class="flow-root">
@@ -194,10 +196,10 @@
                   class="text-sm font-medium text-white hover:text-gray-100"
                   >Sign in</a
                 >
-                <a
-                  href="#"
+                <nuxt-link
+                  to="/register"
                   class="text-sm font-medium text-white hover:text-gray-100"
-                  >Create an account</a
+                  >Create an account</nuxt-link
                 >
               </div>
             </div>
