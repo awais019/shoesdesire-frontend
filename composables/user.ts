@@ -50,13 +50,12 @@ export const useUser = () => {
     const token = useUserStore().token;
     return useFetch<{
       message: string;
-      data: {};
+      data: { id: string; firstName: string; lastName: string; email: string };
     }>("/auth/me", {
-      method: "GET",
-      baseURL,
       headers: {
-        "x-auth-token": token,
+        "x-auth-token": token || "",
       },
+      baseURL,
     });
   }
 
