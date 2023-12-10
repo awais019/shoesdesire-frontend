@@ -1,3 +1,48 @@
+<script setup lang="ts">
+  import { ref } from "vue";
+  import {
+    RadioGroup,
+    RadioGroupLabel,
+    RadioGroupOption,
+  } from "@headlessui/vue";
+
+  const route = useRoute();
+
+  const { data } = await useProduct().getById(route.params.id as string);
+
+  const product = {
+    name: data.value?.data.name,
+    price: data.value?.data.price,
+    description: data.value?.data.description,
+    images: data.value?.data.images.map((img, idx) => {
+      return {
+        id: img.id,
+        imageSrc: img.url,
+        imageAlt: data.value?.data.name,
+        primary: idx === 0 ? true : false,
+      };
+    }),
+    colors: data.value?.data.colors.map((color) => {
+      return {
+        id: color.id,
+        name: color.name,
+        hex: color.hex,
+      };
+    }),
+
+    sizes: data.value?.data.sizes.map((size) => {
+      return {
+        id: size.id,
+        name: size.size,
+        inStock: true,
+      };
+    }),
+  };
+
+  const selectedColor = ref(product.colors?.at(0));
+  const selectedSize = ref(product.sizes?.at(0));
+</script>
+
 <template>
   <div class="bg-white">
     <main
@@ -140,48 +185,3 @@
     </main>
   </div>
 </template>
-
-<script setup>
-  import { ref } from "vue";
-  import {
-    RadioGroup,
-    RadioGroupLabel,
-    RadioGroupOption,
-  } from "@headlessui/vue";
-
-  const route = useRoute();
-
-  const { data } = await useProduct().getById(route.params.id);
-
-  const product = {
-    name: data.value.data.name,
-    price: data.value.data.price,
-    description: data.value.data.description,
-    images: data.value.data.images.map((img, idx) => {
-      return {
-        id: img.id,
-        imageSrc: img.url,
-        imageAlt: data.value.data.name,
-        primary: idx === 0 ? true : false,
-      };
-    }),
-    colors: data.value.data.colors.map((color) => {
-      return {
-        id: color.id,
-        name: color.name,
-        hex: color.hex,
-      };
-    }),
-
-    sizes: data.value.data.sizes.map((size) => {
-      return {
-        id: size.id,
-        name: size.size,
-        inStock: true,
-      };
-    }),
-  };
-
-  const selectedColor = ref(product.colors[0]);
-  const selectedSize = ref(product.sizes[2]);
-</script>

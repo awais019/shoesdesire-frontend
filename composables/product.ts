@@ -22,7 +22,7 @@ type Product = {
   sizes: {
     id: string;
     size: number;
-  };
+  }[];
   colors: {
     id: string;
     name: string;
