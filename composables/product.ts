@@ -34,7 +34,12 @@ type Product = {
 export const useProduct = () => {
   const { baseURL } = useRuntimeConfig().public;
 
-  function getAll(category?: string, color?: string, size?: string) {
+  function getAll(
+    category?: string,
+    color?: string,
+    size?: string,
+    q?: string
+  ) {
     return useFetch<{
       data: ProductAll[];
       message: string;
@@ -44,6 +49,7 @@ export const useProduct = () => {
         ...(category && { category }),
         ...(color && { color }),
         ...(size && { size }),
+        ...(q && { q }),
       },
     });
   }

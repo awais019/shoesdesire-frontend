@@ -1,14 +1,51 @@
 <script lang="ts" setup>
+  import useProductStore from "~/stores/product";
+
   const query = ref("");
 
   const emits = defineEmits<{
     (e: "close"): void;
   }>();
 
+  const route = useRoute();
+
+  const { category, color, size, q } = route.query as {
+    category: string | undefined;
+    color: string | undefined;
+    size: string | undefined;
+    q: string | undefined;
+  };
+
   function handleSubmit() {
     if (query.value) {
       emits("close");
-      navigateTo(`/products/?q=${query.value}`);
+      if (route.path == "/products" && q) {
+        useProductStore().getProducts(category, color, size, query.value);
+      } else if (q) {
+        useProductStore().getProducts(category, color, size, query.value);
+        let _query = "";
+        if (category) _query += `category=${category}&`;
+        if (color) _query += `color=${color}&`;
+        if (size) _query += `size=${size}&`;
+        _query += `q=${query.value}&`;
+        navigateTo(
+          `/products?${
+            _query.length > 0 ? _query.substring(0, _query.length - 1) : ""
+          }`
+        );
+      } else {
+        let _query = "";
+        if (category) _query += `category=${category}&`;
+        if (color) _query += `color=${color}&`;
+        if (size) _query += `size=${size}&`;
+        _query += `q=${query.value}&`;
+
+        navigateTo(
+          `/products?${
+            _query.length > 0 ? _query.substring(0, _query.length - 1) : ""
+          }`
+        );
+      }
     }
   }
 </script>

@@ -14,8 +14,13 @@ type ProductAll = {
 export default defineStore("product", () => {
   const products = ref<ProductAll[]>([]);
 
-  async function getProducts(category?: string, color?: string, size?: string) {
-    const { data } = await useProduct().getAll(category, color, size);
+  async function getProducts(
+    category?: string,
+    color?: string,
+    size?: string,
+    q?: string
+  ) {
+    const { data } = await useProduct().getAll(category, color, size, q);
     products.value = data.value?.data ?? [];
   }
 

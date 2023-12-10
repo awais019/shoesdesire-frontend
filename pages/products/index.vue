@@ -75,11 +75,12 @@
 
   const mobileFiltersOpen = ref(false);
 
-  const { category, color, size } = route.query as {
+  const { category, color, size, q } = route.query as {
     category: string | undefined;
     color: string | undefined;
     size: string | undefined;
+    q: string | undefined;
   };
 
-  await useProductStore().getProducts(category, color, size);
+  await useProductStore().getProducts(category, color, size, q);
 </script>

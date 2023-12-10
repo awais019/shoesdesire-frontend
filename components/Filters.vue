@@ -23,29 +23,55 @@
 
   const route = useRoute();
 
-  let { category, color, size } = route.query as {
-    category: string | undefined;
-    color: string | undefined;
-    size: string | undefined;
-  };
+  const _category = ref("");
+  const _color = ref("");
+  const _size = ref("");
 
   async function handleFilterChange(
     checked: boolean,
     name: string,
     value: string | number
   ) {
-    if (name == "Category" && checked) {
-      category = value as string;
-    } else if (name == "Color" && checked) {
-      color = value as string;
-    } else if (name == "Sizes" && checked) {
-      size = value as string;
+    let { category, color, size, q } = route.query as {
+      category: string | undefined;
+      color: string | undefined;
+      size: string | undefined;
+      q: string | undefined;
+    };
+    if (name == "Category") {
+      if (checked) {
+        category = value as string;
+      } else {
+        category = "";
+      }
+    } else if (name == "Color") {
+      if (checked) {
+        color = value as string;
+      } else {
+        color = "";
+      }
+    } else if (name == "Sizes") {
+      if (checked) {
+        size = value as string;
+      } else {
+        size = "";
+      }
     }
-    await useProductStore().getProducts(category, color, size);
+    await useProductStore().getProducts(category, color, size, q);
     let query = "";
-    if (category) query += `category=${category}&`;
-    if (color) query += `color=${color}&`;
-    if (size) query += `size=${size}&`;
+    if (category) {
+      query += `category=${category}&`;
+      _category.value = category;
+    }
+    if (color) {
+      query += `color=${color}&`;
+      _color.value = color;
+    }
+    if (size) {
+      query += `size=${size}&`;
+      _size.value = size;
+    }
+    if (q) query += `q=${q}&`;
     return navigateTo(
       `/products?${
         query.length > 0 ? query.substring(0, query.length - 1) : ""
@@ -102,11 +128,11 @@
                   "
                   :checked="
                     section.name == 'Category'
-                      ? category == option.label
+                      ? _category == option.label
                       : section.name == 'Color'
-                      ? color == option.label
+                      ? _color == option.label
                       : section.name == 'Sizes'
-                      ? size == option.label
+                      ? _size == option.label
                       : false
                   "
                 />
