@@ -15,7 +15,7 @@
           for your shoes.
         </p>
       </div>
-
+      <Camera />
       <div class="pb-24 pt-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
         <LazyFilters
           :filters="filters"
