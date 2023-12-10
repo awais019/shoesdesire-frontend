@@ -28,10 +28,10 @@
     </div>
     <div class="flex flex-1 flex-col space-y-2 p-4">
       <h3 class="text-sm font-medium text-gray-900">
-        <a :href="product.href">
+        <nuxt-link :to="product.href">
           <span aria-hidden="true" class="absolute inset-0" />
           {{ product.name }}
-        </a>
+        </nuxt-link>
       </h3>
       <p class="text-sm text-gray-500">{{ product.description }}</p>
       <div class="flex flex-1 flex-col justify-end">
