@@ -28,8 +28,23 @@ export const useUser = () => {
     });
   }
 
+  function signIn(email: string, password: string) {
+    return $fetch<{
+      message: string;
+      token: string;
+    }>("/auth/signin", {
+      method: "POST",
+      baseURL,
+      body: {
+        email,
+        password,
+      },
+    });
+  }
+
   return {
     create,
     verifyEmail,
+    signIn,
   };
 };

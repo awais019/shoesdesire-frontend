@@ -172,9 +172,11 @@
                   >
                 </div>
                 <div class="flow-root">
-                  <a href="#" class="-m-2 block p-2 font-medium text-gray-900"
-                    >Sign in</a
-                  >
+                  <nuxt-link
+                    to="/signin"
+                    class="-m-2 block p-2 font-medium text-gray-900"
+                    >Sign in
+                  </nuxt-link>
                 </div>
               </div>
             </DialogPanel>
@@ -191,10 +193,10 @@
               class="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
             >
               <div class="flex items-center space-x-6 ml-auto">
-                <a
-                  href="#"
+                <nuxt-link
+                  to="/signin"
                   class="text-sm font-medium text-white hover:text-gray-100"
-                  >Sign in</a
+                  >Sign in</nuxt-link
                 >
                 <nuxt-link
                   to="/register"
