@@ -1,7 +1,13 @@
 <script lang="ts" setup>
   const query = ref("");
+
+  const emits = defineEmits<{
+    (e: "close"): void;
+  }>();
+
   function handleSubmit() {
     if (query.value) {
+      emits("close");
       navigateTo(`/products/?q=${query.value}`);
     }
   }
@@ -11,7 +17,7 @@
   <div class="overflow-hidden rounded-lg bg-white shadow-md">
     <div class="relative">
       <input
-        class="block w-full appearance-none bg-transparent p-4 text-base text-slate-900 placeholder:text-slate-600 focus:outline-none sm:text-lg sm:leading-6 focus:ring-0"
+        class="block w-full appearance-none bg-transparent p-4 text-base text-slate-900 placeholder:text-slate-600 focus:outline-none sm:text-lg sm:leading-6 focus:ring-0 focus:border-none border-none"
         placeholder="Find shoes..."
         aria-label="Search products"
         v-model="query"

@@ -430,7 +430,7 @@
     </div>
   </div>
   <SharedModal :controller="modalController">
-    <Search />
+    <Search @close="modalController.close" />
   </SharedModal>
 </template>
 
