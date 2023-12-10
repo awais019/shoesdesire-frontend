@@ -1,12 +1,30 @@
 <script lang="ts" setup>
   import { reset } from "@formkit/core";
   import useUserStore from "~/stores/user";
+  import useNotificationStore from "~/stores/notification";
 
   const formId = ref<string>("register-form");
   const userStore = useUserStore();
+  const notificationStore = useNotificationStore();
 
-  function handleSubmit(values: any) {
-    return userStore.register(values);
+  async function handleSubmit(values: any) {
+    const { error } = await userStore.register(values);
+    if (error.value) {
+      notificationStore.addNotification({
+        id: "register-error",
+        type: "error",
+        message: error.value.data.message,
+        duration: 2000,
+      });
+    } else {
+      notificationStore.addNotification({
+        id: "register-success",
+        type: "success",
+        message: "Registration successful. Check your email to verify.",
+        duration: 2000,
+      });
+    }
+    reset(formId.value);
   }
 
   function handleCancel() {
