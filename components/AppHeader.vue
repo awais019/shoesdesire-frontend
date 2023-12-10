@@ -21,7 +21,8 @@
     ShoppingBagIcon,
     XMarkIcon,
   } from "@heroicons/vue/24/outline";
-  import { ref } from "vue";
+
+  import useCartStore from "~/stores/cart";
 
   const { data } = await useCategory().getMenWomenCategories();
 
@@ -34,6 +35,8 @@
   };
 
   const mobileMenuOpen = ref(false);
+
+  const { totalItems } = storeToRefs(useCartStore());
 </script>
 
 <template>
@@ -365,9 +368,9 @@
                             class="h-6 w-6 flex-shrink-0 text-white"
                             aria-hidden="true"
                           />
-                          <span class="ml-2 text-sm font-medium text-white"
-                            >0</span
-                          >
+                          <span class="ml-2 text-sm font-medium text-white">{{
+                            totalItems
+                          }}</span>
                           <span class="sr-only">items in cart, view bag</span>
                         </nuxt-link>
                       </div>

@@ -1,3 +1,27 @@
+type Cart = {
+  id: string;
+  total: number;
+  createdAt: string;
+  updatedAt: string;
+  CartItem: CartItem[];
+};
+
+type CartItem = {
+  quantity: number;
+  Product: {
+    name: string;
+    price: number;
+    Images: { url: string }[];
+  };
+  Size: {
+    size: number;
+  };
+  Color: {
+    name: string;
+    hex: string;
+  };
+};
+
 export const useCart = () => {
   const { baseURL } = useRuntimeConfig().public;
 
@@ -32,8 +56,18 @@ export const useCart = () => {
     });
   }
 
+  function get(cartId: string) {
+    return useFetch<{
+      message: string;
+      data: Cart;
+    }>(`/cart/${cartId}`, {
+      baseURL,
+    });
+  }
+
   return {
     create,
     addToCart,
+    get,
   };
 };

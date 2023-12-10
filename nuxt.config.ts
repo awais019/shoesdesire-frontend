@@ -8,7 +8,12 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ["@formkit/nuxt", "@vueuse/nuxt", "@pinia/nuxt"],
+  modules: [
+    "@formkit/nuxt",
+    "@vueuse/nuxt",
+    "@pinia/nuxt",
+    "@pinia-plugin-persistedstate/nuxt",
+  ],
   runtimeConfig: {
     public: {
       baseURL: process.env.BASE_URL,
