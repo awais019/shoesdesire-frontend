@@ -7,8 +7,10 @@ type Cart = {
 };
 
 type CartItem = {
+  id: string;
   quantity: number;
   Product: {
+    id: string;
     name: string;
     price: number;
     Images: { url: string }[];
