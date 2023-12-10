@@ -21,7 +21,15 @@ export const useUser = () => {
     });
   }
 
+  function verifyEmail(token: string) {
+    return $fetch<{ message: string }>(`/user/verify/?token=${token}`, {
+      method: "POST",
+      baseURL,
+    });
+  }
+
   return {
     create,
+    verifyEmail,
   };
 };

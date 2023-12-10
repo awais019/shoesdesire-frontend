@@ -2,6 +2,17 @@
   const { data: _data } = await useCategory().getAll();
 
   const categories = _data.value?.data;
+
+  const route = useRoute();
+
+  if (route.query.token) {
+    const token = route.query.token as string;
+    const response = await useUser().verifyEmail(token);
+
+    if (response.message == "Success") {
+      navigateTo("/");
+    }
+  }
 </script>
 
 <template>
