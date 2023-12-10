@@ -16,9 +16,11 @@ type CartItem = {
     Images: { url: string }[];
   };
   Size: {
+    id: string;
     size: number;
   };
   Color: {
+    id: string;
     name: string;
     hex: string;
   };

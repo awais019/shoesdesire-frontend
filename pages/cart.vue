@@ -2,9 +2,17 @@
   import { XMarkIcon } from "@heroicons/vue/20/solid";
 
   import useCartStore from "~/stores/cart";
+  import useUserStore from "~/stores/user";
+  import useNotificationStore from "~/stores/notification";
 
   const cartStore = useCartStore();
+  const userStore = useUserStore();
+  const notificationStore = useNotificationStore();
+
   const { cart } = storeToRefs(cartStore);
+  const { isLoggedIn } = storeToRefs(userStore);
+
+  const { checkOut } = useOrder();
 
   const products = computed(() => {
     return cart.value?.CartItem.map((item: any) => {
@@ -26,7 +34,27 @@
     return cart.value?.total;
   });
 
-  function handleSubmit() {}
+  async function handleSubmit() {
+    if (!isLoggedIn.value) {
+      navigateTo("/signin?redirect=/cart");
+    } else {
+      const { data, error } = await checkOut();
+
+      if (error.value) {
+        notificationStore.addNotification({
+          id: `${Math.random()}`,
+          type: "error",
+          message: error.value.message,
+          duration: 3000,
+        });
+        return;
+      } else if (data.value) {
+        navigateTo(data.value.data.paymentLink, {
+          external: true,
+        });
+      }
+    }
+  }
 
   function removeItem(itemId: string) {
     cartStore.removeItemFromCart(itemId);

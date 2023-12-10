@@ -16,9 +16,11 @@ type CartItem = {
     Images: { url: string }[];
   };
   Size: {
+    id: string;
     size: number;
   };
   Color: {
+    id: string;
     name: string;
     hex: string;
   };
@@ -54,6 +56,7 @@ export default defineStore(
       }
 
       const { data } = await get(cartId.value);
+
       cart.value = data.value?.data ?? null;
     }
 
@@ -76,10 +79,25 @@ export default defineStore(
       }, 0);
     });
 
+    const orderItems = computed(() => {
+      if (!cart.value) {
+        return [];
+      }
+      return cart.value.CartItem.map((item) => {
+        return {
+          productId: item.Product.id,
+          quantity: item.quantity,
+          sizeId: item.Size.id,
+          colorId: item.Color.id,
+        };
+      });
+    });
+
     return {
       cartId,
       cart,
       totalItems,
+      orderItems,
       addProductToCart,
       getCart,
       removeItemFromCart,
