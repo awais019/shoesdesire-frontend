@@ -27,18 +27,25 @@
 
   const { data } = await useCategory().getMenWomenCategories();
 
-  const navigation = {
-    categories: data.value?.data,
-    pages: [
-      { name: "About us", link: "/about" },
-      { name: "Contact us", link: "/contact" },
-    ],
-  };
+  const navigation = computed(() => {
+    return {
+      categories: data.value?.data,
+      pages: [
+        { name: "About", link: "/about" },
+        {
+          name: "Contact us",
+          link: "/contact",
+        },
+      ],
+    };
+  });
 
   const mobileMenuOpen = ref(false);
 
   const { totalItems } = storeToRefs(useCartStore());
   const { isLoggedIn, user } = storeToRefs(useUserStore());
+
+  const modalController = useModal();
 </script>
 
 <template>
@@ -356,10 +363,13 @@
                       <Bars3Icon class="h-6 w-6" aria-hidden="true" />
                     </button>
 
-                    <a href="#" class="ml-2 p-2 text-white">
+                    <button
+                      class="ml-2 p-2 text-white"
+                      @click.prevent="modalController.open"
+                    >
                       <span class="sr-only">Search</span>
                       <MagnifyingGlassIcon class="h-6 w-6" aria-hidden="true" />
-                    </a>
+                    </button>
                   </div>
 
                   <nuxt-link to="/" class="lg:hidden">
@@ -372,14 +382,15 @@
                   </nuxt-link>
 
                   <div class="flex flex-1 items-center justify-end">
-                    <a
-                      href="#"
+                    <button
                       class="hidden text-sm font-medium text-white lg:block"
-                      >Search</a
+                      @click.prevent="modalController.open"
                     >
+                      Search
+                    </button>
 
                     <div class="flex items-center lg:ml-8">
-                      <nuxt-link href="/" class="p-2 text-white lg:hidden">
+                      <nuxt-link to="/" class="p-2 text-white lg:hidden">
                         <span class="sr-only">Help</span>
                         <QuestionMarkCircleIcon
                           class="h-6 w-6"
@@ -418,6 +429,9 @@
       </header>
     </div>
   </div>
+  <SharedModal :controller="modalController">
+    <Search />
+  </SharedModal>
 </template>
 
 <style scoped></style>

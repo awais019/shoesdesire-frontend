@@ -5,7 +5,6 @@
     <AppHeader />
     <slot />
     <AppFooter />
-    <Notifications />
   </div>
 </template>
 
