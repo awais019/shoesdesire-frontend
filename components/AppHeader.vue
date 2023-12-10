@@ -21,10 +21,7 @@
     ShoppingBagIcon,
     XMarkIcon,
   } from "@heroicons/vue/24/outline";
-  import { ChevronDownIcon } from "@heroicons/vue/20/solid";
   import { ref } from "vue";
-
-  const currencies = ["CAD", "USD", "AUD", "EUR", "GBP"];
 
   const { data } = await useCategory().getMenWomenCategories();
 
@@ -129,7 +126,7 @@
                         </div>
                         <nuxt-link
                           class="mt-6 block text-sm font-medium text-gray-900"
-                          to="/"
+                          :to="`products/?category=${item.name}`"
                         >
                           <span
                             class="absolute inset-0 z-10"
@@ -280,7 +277,7 @@
                                         />
                                       </div>
                                       <nuxt-link
-                                        to="/"
+                                        :to="`/products/?category=${item.name}`"
                                         class="mt-4 block font-medium text-gray-900"
                                       >
                                         <span
