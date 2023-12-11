@@ -24,6 +24,9 @@
     captured.value = true;
     if (video.value && canvas.value) {
       const context = canvas.value.getContext("2d");
+
+      console.log(video.value.videoWidth, video.value.videoHeight);
+
       context?.drawImage(video.value, 0, 0, 640, 480);
       image.value = canvas.value?.toDataURL("image/png");
       releaseCamera();
@@ -56,15 +59,15 @@
       autoplay
     ></video>
     <button
-      class="bg-indigo-600 text-white font-medium px-4 py-2 rounded-md"
+      class="bg-indigo-600 text-white font-medium px-4 py-2 rounded-md absolute mb-2 bottom-2 sm:static"
       @click="handleCapture"
       v-if="!captured"
     >
       Capture
     </button>
-    <canvas ref="canvas" width="640" height="480" class="w-0"></canvas>
-    <div v-if="captured">
-      <img :src="image" alt="Foot Image" />
+    <canvas ref="canvas" width="640" height="480" v-show="false"></canvas>
+    <div v-if="captured" class="p-4">
+      <img :src="image" alt="Foot Image" class="" />
       <div class="flex gap-3 text-white font-medium mt-2">
         <button class="bg-indigo-600 px-4 py-2 rounded-lg">
           Estimate size

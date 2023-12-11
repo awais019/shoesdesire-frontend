@@ -21,7 +21,7 @@
   </div>
   <SharedModal :controller="modalController">
     <div
-      class="bg-white p-4 rounded-lg max-w-2xl flex items-center justify-center"
+      class="bg-white absolute inset-0 sm:static sm:rounded-lg sm:max-w-2xl sm:flex sm:items-center sm:justify-center"
     >
       <Instructions @capture="handleCapture" v-if="goNext == 0" />
       <Video v-else-if="goNext == 1" />

@@ -5,7 +5,7 @@
 </script>
 
 <template>
-  <div class="text-md text-gray-700 flex flex-col gap-4 items-center">
+  <div class="text-md text-gray-700 flex flex-col gap-4 items-center p-4">
     <p>
       Pleas take a clear picture of your foot and we will estimate your shoe
       size. Make sure to place your foot on a white background.
