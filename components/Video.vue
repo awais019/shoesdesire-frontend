@@ -1,9 +1,20 @@
 <script lang="ts" setup>
+  import useNotificationsStore from "~/stores/notification";
+
+  const emits = defineEmits<{
+    (e: "estimated", footLength: number): void;
+  }>();
+
   const video = ref<HTMLVideoElement | null>(null);
   const canvas = ref<HTMLCanvasElement | null>(null);
   const image = ref("");
+  const blob = ref<Blob | null>(null);
+  const footLength = ref(0);
 
   const captured = ref(false);
+  const { estimate } = useEstimateSize();
+
+  const notificationStore = useNotificationsStore();
 
   function startStream() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -25,10 +36,11 @@
     if (video.value && canvas.value) {
       const context = canvas.value.getContext("2d");
 
-      console.log(video.value.videoWidth, video.value.videoHeight);
-
       context?.drawImage(video.value, 0, 0, 640, 480);
-      image.value = canvas.value?.toDataURL("image/png");
+      image.value = canvas.value.toDataURL("image/jpeg");
+      canvas.value.toBlob((b) => {
+        blob.value = b;
+      });
       releaseCamera();
     }
   }
@@ -46,6 +58,26 @@
   function handleRetake() {
     captured.value = false;
     startStream();
+  }
+
+  async function handleEstimate() {
+    const formData = new FormData();
+    if (blob.value) {
+      formData.append("image", blob.value, "image.jpg");
+
+      const { data, error } = await estimate(formData);
+      if (data.value) {
+        footLength.value = data.value.foot_length_in || 0;
+        emits("estimated", footLength.value);
+      } else if (error.value) {
+        notificationStore.addNotification({
+          id: Date.now().toString(),
+          type: "error",
+          message: error.value.message,
+          duration: 5000,
+        });
+      }
+    }
   }
 </script>
 
@@ -69,7 +101,10 @@
     <div v-if="captured" class="p-4">
       <img :src="image" alt="Foot Image" class="" />
       <div class="flex gap-3 text-white font-medium mt-2">
-        <button class="bg-indigo-600 px-4 py-2 rounded-lg">
+        <button
+          class="bg-indigo-600 px-4 py-2 rounded-lg"
+          @click="handleEstimate"
+        >
           Estimate size
         </button>
         <button class="bg-red-500 px-4 py-2 rounded-lg" @click="handleRetake">
