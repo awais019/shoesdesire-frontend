@@ -30,16 +30,16 @@
   const navigation = computed(() => {
     return {
       categories: data.value?.data,
-      pages: [
-        { name: "About", link: "/about" },
-        {
-          name: "Contact us",
-          link: "/contact",
-        },
-      ],
     };
   });
 
+  const pages = [
+    { name: "About", link: "/about" },
+    {
+      name: "Contact us",
+      link: "/contact",
+    },
+  ];
   const mobileMenuOpen = ref(false);
 
   const { totalItems } = storeToRefs(useCartStore());
@@ -159,11 +159,7 @@
               </TabGroup>
 
               <div class="space-y-6 border-t border-gray-200 px-4 py-6">
-                <div
-                  v-for="page in navigation.pages"
-                  :key="page.name"
-                  class="flow-root"
-                >
+                <div v-for="page in pages" :key="page.name" class="flow-root">
                   <nuxt-link
                     :to="page.link"
                     class="-m-2 block p-2 font-medium text-gray-900"
@@ -342,7 +338,7 @@
                         </Popover>
 
                         <nuxt-link
-                          v-for="page in navigation.pages"
+                          v-for="page in pages"
                           :key="page.name"
                           :to="page.link"
                           class="flex items-center text-sm font-medium text-white"
