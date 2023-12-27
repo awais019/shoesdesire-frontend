@@ -10,7 +10,14 @@ export default {
   ],
 
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        palatinate_blue: "#3047EC",
+      },
+      boxShadow: {
+        chat: "0px 1px 6px rgba(0, 0, 0, 0.06), 0px 2px 32px rgba(0, 0, 0, 0.16);",
+      },
+    },
   },
   plugins: [
     require("@tailwindcss/typography"),
