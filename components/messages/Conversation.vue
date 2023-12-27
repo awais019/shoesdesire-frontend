@@ -1,7 +1,9 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div>Conversation</div>
+  <div class="h-[642px] w-[423px] bg-white rounded-3xl shadow-conversation">
+    <MessagesHeader />
+  </div>
 </template>
 
 <style scoped></style>

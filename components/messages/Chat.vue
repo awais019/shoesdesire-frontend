@@ -14,7 +14,7 @@
 </script>
 
 <template>
-  <div class="fixed bottom-2 right-2 flex flex-col items-end gap-5">
+  <div class="fixed bottom-2 right-2 flex flex-col items-end gap-5 z-20">
     <MessagesConversation v-if="openChat" />
     <button
       class="w-10 h-10 text-palatinate_blue"

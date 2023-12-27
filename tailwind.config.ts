@@ -16,6 +16,8 @@ export default {
       },
       boxShadow: {
         chat: "0px 1px 6px rgba(0, 0, 0, 0.06), 0px 2px 32px rgba(0, 0, 0, 0.16);",
+        conversation:
+          "5px 14px 80px 0px rgba(26, 26, 26, 0.12), 10px 10px 40px 0px rgba(0, 0, 0, 0.08);",
       },
     },
   },
