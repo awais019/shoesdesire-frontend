@@ -5,11 +5,19 @@
 
   const { isLoggedIn } = storeToRefs(useUserStore());
 
+  const { $socket } = useNuxtApp();
+
   function handleOpenChat() {
     if (!isLoggedIn.value) {
       return navigateTo("/signin");
     }
     openChat.value = true;
+    $socket.connect();
+  }
+
+  function handleCloseChat() {
+    openChat.value = false;
+    $socket.disconnect();
   }
 </script>
 
@@ -39,7 +47,7 @@
     </button>
     <div v-else>
       <button
-        @click="openChat = false"
+        @click="handleCloseChat"
         class="w-10 h-10 rounded-full bg-palatinate_blue shadow-chat flex items-center justify-center"
       >
         <svg
