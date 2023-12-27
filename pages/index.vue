@@ -34,8 +34,9 @@
         aria-labelledby="category-heading"
         class="pt-24 sm:pt-32 xl:mx-auto xl:max-w-7xl xl:px-8 mb-12"
       >
+        <Camera />
         <div
-          class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0"
+          class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0 mt-4"
         >
           <h2
             id="category-heading"
