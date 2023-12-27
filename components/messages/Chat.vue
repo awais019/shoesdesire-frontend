@@ -1,14 +1,21 @@
 <script lang="ts" setup>
+  import useUserStore from "~/stores/user";
+
   const openChat = ref(false);
 
+  const { isLoggedIn } = storeToRefs(useUserStore());
+
   function handleOpenChat() {
-    console.log("Open chat");
+    if (!isLoggedIn.value) {
+      return navigateTo("/signin");
+    }
     openChat.value = true;
   }
 </script>
 
 <template>
-  <div class="fixed bottom-2 right-2">
+  <div class="fixed bottom-2 right-2 flex flex-col items-end gap-5">
+    <MessagesConversation v-if="openChat" />
     <button
       class="w-10 h-10 text-palatinate_blue"
       @click="handleOpenChat"
