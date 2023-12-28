@@ -1,15 +1,36 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+  import useMessageStore from "~/stores/message";
+  import useUserStore from "~/stores/user";
+
+  const { conversation } = storeToRefs(useMessageStore());
+  const { user } = storeToRefs(useUserStore());
+
+  const { $socket } = useNuxtApp();
+
+  function handleSendMessage(values: any) {
+    if (!conversation.value) return;
+    $socket.emit("message", {
+      conversationId: conversation.value.id,
+      message: values.message,
+      sender: user.value?.id,
+    });
+  }
+</script>
 
 <template>
   <FormKit
     type="form"
     :actions="false"
     form-class="relative border-t border-[#EBEBEB]"
+    @submit="handleSendMessage"
   >
     <FormKit
       type="text"
       input-class="w-full border-none focus:ring-0 p-5 rounded-b-2xl"
+      name="message"
       placeholder="Type your message"
+      validation="required"
+      autocomplete="off"
     />
     <button type="submit" class="absolute right-2 top-1/3">
       <svg
