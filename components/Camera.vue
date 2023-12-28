@@ -4,6 +4,7 @@
   const goNext = ref(0);
   const footLength = ref(0);
   const gender = ref("male");
+  const region = ref("pakistan");
   const shoeSize = ref(0);
 
   function handleCapture() {
@@ -15,18 +16,47 @@
     goNext.value = 2;
   }
 
-  function handleChage(value: Event) {
+  function handleGenderChange(value: Event) {
     gender.value = (value.target as HTMLInputElement).value;
-    if (gender.value == "male") {
-      shoeSize.value = Math.round(footLength.value / 0.66);
-    } else {
-      shoeSize.value = Math.round(footLength.value / 0.66) - 1;
+    calculateShoeSize();
+  }
+
+  function handleRegionChange(value: Event) {
+    region.value = (value.target as HTMLInputElement).value;
+    calculateShoeSize();
+  }
+
+  function handleApplyFilter() {
+    modalController.close();
+    if (shoeSize.value > 14) {
+      region.value = "pakistan";
     }
+    calculateShoeSize();
+    return navigateTo(`/products/?size=${shoeSize.value}`);
   }
 
   function handleClose() {
     goNext.value = 0;
     modalController.close();
+  }
+
+  function calculateShoeSize() {
+    if (region.value == "uk" || region.value == "pakistan") {
+      if (gender.value == "male") {
+        shoeSize.value = 3 * footLength.value - 25;
+      } else {
+        shoeSize.value = 3 * footLength.value - 25.5;
+      }
+    } else if (region.value == "europe") {
+      shoeSize.value = footLength.value * 2.54 * 1.5 + 2;
+    } else {
+      if (gender.value == "male") {
+        shoeSize.value = footLength.value * 3 - 22;
+      } else {
+        shoeSize.value = footLength.value * 3 - 21;
+      }
+    }
+    shoeSize.value = Math.round(shoeSize.value);
   }
 </script>
 
@@ -54,7 +84,7 @@
             id="male"
             name="gender"
             value="male"
-            @change="(value) => handleChage(value)"
+            @change="(value) => handleGenderChange(value)"
           />
           <label for="male">Male</label>
           <input
@@ -62,17 +92,67 @@
             id="female"
             name="gender"
             value="female"
-            @change="(value) => handleChage(value)"
+            @change="(value) => handleGenderChange(value)"
           />
           <label for="female">Female</label>
-
-          <p class="text-gray-500">Estimated shoe size: {{ shoeSize }}</p>
         </div>
+        <div class="text-gray-700 flex gap-2 items-center">
+          Select your region:
+          <input
+            type="radio"
+            id="uk"
+            name="region"
+            value="uk"
+            @change="(value) => handleRegionChange(value)"
+          />
+          <label for="uk">UK</label>
+          <input
+            type="radio"
+            id="usa"
+            name="region"
+            value="usa"
+            @change="(value) => handleRegionChange(value)"
+          />
+          <label for="usa">Usa</label>
+          <input
+            type="radio"
+            id="europe"
+            name="region"
+            value="europe"
+            @change="(value) => handleRegionChange(value)"
+          />
+          <label for="europe">Europe</label>
+
+          <input
+            type="radio"
+            id="usa"
+            name="region"
+            value="usa"
+            @change="(value) => handleRegionChange(value)"
+          />
+          <label for="usa">Usa</label>
+          <input
+            type="radio"
+            id="pakistan"
+            name="region"
+            value="pakistan"
+            @change="(value) => handleRegionChange(value)"
+          />
+          <label for="pakistan">Pakistan</label>
+        </div>
+        <p class="text-gray-500">Estimated shoe size: {{ shoeSize }}</p>
+
         <button
-          class="bg-indigo-600 text-white font-medium px-4 py-2 rounded-md mt-2"
+          class="bg-red-600 text-white font-medium px-4 py-2 rounded-md mt-2"
           @click="handleClose"
         >
           Close
+        </button>
+        <button
+          class="bg-indigo-600 text-white font-medium px-4 py-2 rounded-md mt-2 ml-2"
+          @click="handleApplyFilter"
+        >
+          Apply Filter
         </button>
       </div>
     </div>
