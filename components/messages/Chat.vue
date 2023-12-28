@@ -1,16 +1,19 @@
 <script lang="ts" setup>
   import useUserStore from "~/stores/user";
+  import useMessageStore from "~/stores/message";
 
   const openChat = ref(false);
 
   const { isLoggedIn } = storeToRefs(useUserStore());
+  const messageStore = useMessageStore();
 
   const { $socket } = useNuxtApp();
 
-  function handleOpenChat() {
+  async function handleOpenChat() {
     if (!isLoggedIn.value) {
       return navigateTo("/signin");
     }
+    await messageStore.getConversation();
     openChat.value = true;
   }
 
