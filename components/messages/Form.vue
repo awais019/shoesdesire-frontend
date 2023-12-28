@@ -2,10 +2,14 @@
   import useMessageStore from "~/stores/message";
   import useUserStore from "~/stores/user";
 
+  import { reset } from "@formkit/core";
+
   const { conversation } = storeToRefs(useMessageStore());
   const { user } = storeToRefs(useUserStore());
 
   const { $socket } = useNuxtApp();
+
+  const formId = "message-form";
 
   function handleSendMessage(values: any) {
     if (!conversation.value) return;
@@ -14,6 +18,7 @@
       message: values.message,
       sender: user.value?.id,
     });
+    reset(formId);
   }
 </script>
 
@@ -31,6 +36,7 @@
       placeholder="Type your message"
       validation="required"
       autocomplete="off"
+      :id="formId"
     />
     <button type="submit" class="absolute right-2 top-1/3">
       <svg

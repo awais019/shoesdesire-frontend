@@ -21,7 +21,7 @@
 </script>
 
 <template>
-  <div class="h-[512px] p-5">
+  <div class="h-[512px] p-5 overflow-auto">
     <p v-if="messages.length == 0" class="tex-sm text-gray-400">
       No messages yet.
     </p>
