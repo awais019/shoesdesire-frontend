@@ -12,13 +12,18 @@
       return navigateTo("/signin");
     }
     openChat.value = true;
-    $socket.connect();
   }
 
   function handleCloseChat() {
     openChat.value = false;
     $socket.disconnect();
   }
+
+  onMounted(() => {
+    if (isLoggedIn.value) {
+      $socket.connect();
+    }
+  });
 </script>
 
 <template>

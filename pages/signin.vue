@@ -11,6 +11,8 @@
 
   const route = useRoute();
 
+  const { $socket } = useNuxtApp();
+
   async function handleSubmit(values: any) {
     const { error } = await userStore.signIn(values.email, values.password);
     if (error && error.value) {
@@ -28,6 +30,8 @@
       message: "You have successfully signed in.",
       duration: 3000,
     });
+
+    $socket.connect();
 
     const redirect = route.query.redirect as string;
     if (redirect) {
