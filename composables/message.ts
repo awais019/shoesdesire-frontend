@@ -31,7 +31,7 @@ export const useMessage = () => {
       data: Conversation;
     }>(`/messages/${userId}`, {
       headers: {
-        "X-Auth-Token": userStore.token as string,
+        "x-auth-token": userStore.token as string,
       },
       baseURL,
     });
@@ -43,7 +43,7 @@ export const useMessage = () => {
       data: Message[];
     }>(`/messages/${conversationId}/messages`, {
       headers: {
-        "X-Auth-Token": userStore.token as string,
+        "x-auth-token": userStore.token as string,
       },
       baseURL,
     });
