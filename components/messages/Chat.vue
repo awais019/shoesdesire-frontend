@@ -14,6 +14,7 @@
       return navigateTo("/signin");
     }
     await messageStore.getConversation();
+    await messageStore.getMessages();
     openChat.value = true;
   }
 
